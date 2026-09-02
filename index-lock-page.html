@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#241820">
+  <title>A Little Surprise for Aseel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      color: #fff;
+      font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(244, 160, 175, .20), transparent 30%),
+        radial-gradient(circle at 85% 85%, rgba(205, 117, 135, .12), transparent 28%),
+        linear-gradient(145deg, #21161d 0%, #4a2533 52%, #21161d 100%);
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      opacity: .35;
+    }
+
+    body::before {
+      top: -80px;
+      left: -70px;
+      background: #d8788b;
+    }
+
+    body::after {
+      right: -70px;
+      bottom: -80px;
+      background: #9e5265;
+    }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 220, 225, .8);
+      animation: float 7s linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(105vh) scale(.5);
+        opacity: 0;
+      }
+      15% { opacity: .8; }
+      85% { opacity: .8; }
+      to {
+        transform: translateY(-10vh) scale(1.15);
+        opacity: 0;
+      }
+    }
+
+    .lock-card {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 430px);
+      padding: 38px 24px 30px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 28px;
+      background: rgba(255,255,255,.075);
+      box-shadow: 0 30px 90px rgba(0,0,0,.38);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: cardIn .8s ease both;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .symbol {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 160, 175, .45);
+      color: #f3a1ad;
+      font-size: 28px;
+      box-shadow: 0 0 35px rgba(243, 161, 173, .10);
+    }
+
+    .mini {
+      color: #f0a0ad;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(48px, 14vw, 68px);
+      line-height: .95;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      max-width: 320px;
+      margin: 0 auto 24px;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .date-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1.35fr;
+      gap: 9px;
+      margin-bottom: 13px;
+    }
+
+    .date-inputs input {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(255,255,255,.15);
+      outline: none;
+      border-radius: 13px;
+      padding: 14px 7px;
+      text-align: center;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      font-size: 15px;
+      transition: .2s ease;
+    }
+
+    .date-inputs input::placeholder {
+      color: rgba(255,255,255,.40);
+    }
+
+    .date-inputs input:focus {
+      border-color: #ed9aa8;
+      box-shadow: 0 0 0 3px rgba(237,154,168,.10);
+      background: rgba(255,255,255,.11);
+    }
+
+    .unlock {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 14px 18px;
+      background: #d77e91;
+      color: #fff;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      transition: .2s ease;
+    }
+
+    .unlock:hover {
+      background: #e594a4;
+      transform: translateY(-1px);
+    }
+
+    .error {
+      min-height: 18px;
+      margin-top: 10px;
+      color: #ffb3bd;
+      font-size: 11px;
+      opacity: 0;
+      transition: .2s ease;
+    }
+
+    .error.show {
+      opacity: 1;
+    }
+
+    .shake {
+      animation: shake .4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .hint {
+      margin-top: 12px;
+      color: rgba(255,255,255,.35);
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 390px) {
+      .lock-card {
+        padding: 32px 17px 25px;
+      }
+
+      .date-inputs {
+        gap: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkles" aria-hidden="true"></div>
+
+  <main class="lock-card" id="lockCard">
+    <div class="symbol">♡</div>
+
+    <p class="mini">A little surprise</p>
+    <h1>For Aseel</h1>
+
+    <p class="subtitle">
+      This little world is locked just for you.<br>
+      Enter your birthday to open it.
+    </p>
+
+    <div class="date-inputs">
+      <input id="day" type="tel" inputmode="numeric" maxlength="2" placeholder="DD" aria-label="Day">
+      <input id="month" type="tel" inputmode="numeric" maxlength="2" placeholder="MM" aria-label="Month">
+      <input id="year" type="tel" inputmode="numeric" maxlength="4" placeholder="YYYY" aria-label="Year">
+    </div>
+
+    <button class="unlock" id="unlockBtn" type="button">
+      Unlock the surprise
+    </button>
+
+    <p class="error" id="error">Not quite... try again ♡</p>
+    <p class="hint">DD / MM / YYYY</p>
+  </main>
+
+  <script>
+    const correct = {
+      day: "03",
+      month: "09",
+      year: "2010"
+    };
+
+    const lockCard = document.getElementById("lockCard");
+    const day = document.getElementById("day");
+    const month = document.getElementById("month");
+    const year = document.getElementById("year");
+    const unlockBtn = document.getElementById("unlockBtn");
+    const error = document.getElementById("error");
+
+    function unlock() {
+      const enteredDay = day.value.padStart(2, "0");
+      const enteredMonth = month.value.padStart(2, "0");
+      const enteredYear = year.value;
+
+      if (
+        enteredDay === correct.day &&
+        enteredMonth === correct.month &&
+        enteredYear === correct.year
+      ) {
+        // The main site must be named home.html.
+        window.location.href = "index.html";
+        return;
+      }
+
+      error.classList.add("show");
+      lockCard.classList.remove("shake");
+      void lockCard.offsetWidth;
+      lockCard.classList.add("shake");
+    }
+
+    unlockBtn.addEventListener("click", unlock);
+
+    [day, month, year].forEach((input, index, all) => {
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/\D/g, "");
+        error.classList.remove("show");
+
+        if (input.value.length >= input.maxLength && all[index + 1]) {
+          all[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") {
+          unlock();
+        }
+      });
+    });
+
+    const sparkles = document.querySelector(".sparkles");
+
+    for (let i = 0; i < 24; i++) {
+      const sparkle = document.createElement("span");
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * 100 + "%";
+      sparkle.style.animationDelay = Math.random() * 7 + "s";
+      sparkle.style.animationDuration = 5 + Math.random() * 5 + "s";
+      sparkle.style.transform = "scale(" + (.5 + Math.random()) + ")";
+      sparkles.appendChild(sparkle);
+    }
+  </script>
+</body>
+</html>
